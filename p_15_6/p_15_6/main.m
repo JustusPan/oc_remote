@@ -39,6 +39,9 @@ int main(int argc, const char * argv[]) {
         [mstr setString: @"This is string A"];
         NSLog(@"%@", mstr);
         
+        [mstr replaceCharactersInRange: NSMakeRange(8, 8) withString: @"a mutable string"];
+        NSLog(@"%@", mstr);
+        
         search = @"This is";
         replace = @"An example of";
         
@@ -48,16 +51,23 @@ int main(int argc, const char * argv[]) {
             NSLog(@"%@", mstr);
         }
         
+        
         search = @"a";
         replace = @"X";
         
         substr = [mstr rangeOfString: search];
         
-        while (substr.location != NSNotFound) {
-            [mstr replaceCharactersInRange: substr withString: replace];
-        }
+        //while (substr.location != NSNotFound) {
+        //    [mstr replaceCharactersInRange: substr withString: replace];
+        //    substr = [mstr rangeOfString: search];
+        //}
         
+        [mstr replaceOccurrencesOfString: search
+                              withString: replace
+                                 options: nil
+                                   range: NSMakeRange (0, [mstr length])];
         NSLog(@"%@", mstr);
+        
         
     }
     return 0;
