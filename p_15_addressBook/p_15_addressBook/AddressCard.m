@@ -8,30 +8,35 @@
 
 #import "AddressCard.h"
 
-@implementation AddressCard {
-    NSString *name;
-    NSString *email;
-}
+@implementation AddressCard
+//{
+//    NSString *name;
+//    NSString *email;
+//}
 
--(void) setName: (NSString *) theName {
-    if (name != theName) {
-        name = [NSString stringWithString: theName];
-    }
-}
+@synthesize name, email;
 
--(void) setEmail: (NSString *) theEmail {
-    if (email != theEmail) {
-        email = [NSString stringWithString: theEmail];
-    }
-}
 
--(NSString *) name {
-    return name;
-}
 
--(NSString *) email {
-    return email;
-}
+//-(void) setName: (NSString *) theName {
+//    if (name != theName) {
+//        name = [NSString stringWithString: theName];
+//    }
+//}
+//
+//-(void) setEmail: (NSString *) theEmail {
+//    if (email != theEmail) {
+//        email = [NSString stringWithString: theEmail];
+//    }
+//}
+//
+//-(NSString *) name {
+//    return name;
+//}
+//
+//-(NSString *) email {
+//    return email;
+//}
 
 -(void) print {
     NSLog(@"===================================");
@@ -43,6 +48,11 @@
     NSLog(@"|                                 |");
     NSLog(@"|         O            O          |");
     NSLog(@"===================================");
+}
+
+-(void) setName: (NSString *) theName andEmail: (NSString *) theEmail {
+    self.name = theName;
+    self.email = theEmail;
 }
 
 @end
