@@ -14,11 +14,15 @@
 }
 
 -(void) setName: (NSString *) theName {
-    name = theName;
+    if (name != theName) {
+        name = [NSString stringWithString: theName];
+    }
 }
 
 -(void) setEmail: (NSString *) theEmail {
-    email = theEmail;
+    if (email != theEmail) {
+        email = [NSString stringWithString: theEmail];
+    }
 }
 
 -(NSString *) name {
