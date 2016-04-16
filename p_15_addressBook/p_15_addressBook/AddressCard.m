@@ -55,4 +55,17 @@
     self.email = theEmail;
 }
 
+-(BOOL) isEqual: (AddressCard *) theCard {
+    if ([name isEqualToString: theCard.name] == YES &&
+        [email isEqualToString: theCard.email] == YES) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+-(NSComparisonResult) compareNames: (id) element {
+    return [name compare: [element name]];
+}
+
 @end

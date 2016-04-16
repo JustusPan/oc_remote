@@ -30,6 +30,22 @@
     [book addObject: theCard];
 }
 
+-(void) removeCard: (AddressCard *) theCard {
+    //[book removeObjectIdenticalTo: theCard];
+    [book removeObject: theCard];
+}
+
+//-(void) sort {
+//    [book sortUsingSelector: @selector(compareNames:)];
+//}
+
+-(void) sort {
+    [book sortUsingComparator:
+     ^(id obj1, id obj2) {
+         return [[obj1 name] compare: [obj2 name]];
+     }];
+}
+
 -(int) entries {
     return [book count];
 }
@@ -38,8 +54,33 @@
     NSLog(@"==========Content of: %@ ==========", bookName);
     for (AddressCard *theCard in  book)
         NSLog(@"%-20s %-32s", [theCard.name UTF8String], [theCard.email UTF8String]);
-    NSLog(@"=====================================================");
+        NSLog(@"=====================================================");
+    //[self enumerateObejctsUsingBlock: ^(AddressCard *theCard, NSUInteger idx, BOOL *stop) {
+    //    NSLog(@"%-20s %-30s", [theCard.name UTF8String], [theCard.email UTF8String]);
+    //    NSLog(@"=====================================================");
+    //}];
     
+}
+
+-(AddressCard *) lookup: (NSString *) theName {
+    for (AddressCard *theCard in book) {
+        if ([theCard.name caseInsensitiveCompare: theName] == NSOrderedSame) {
+            return theCard;
+        }
+    }
+    return nil;
+}
+
+-(NSIndexSet *) lookupAll: (NSString *) theName {
+    NSIndexSet *result = [book indexesOfObjectsPassingTest:
+                          ^(id obj, NSUInteger idx, BOOL *stop) {
+                              if ([[obj name] caseInsensitiveCompare: theName] == NSOrderedSame) {
+                                  return YES;
+                              } else {
+                                  return NO;
+                              }
+                          }];
+    return result;
 }
 
 @end
