@@ -21,12 +21,15 @@ int main(int argc, const char * argv[]) {
         NSRange sufRange = {time.length - 2,2};
         NSRange preRange = {0,2};
         NSMutableString * mutableTime = [time mutableCopy];
+        NSArray <NSString *> * separatedSet = [mutableTime componentsSeparatedByString:@":"];
         if ([time hasSuffix:amIdentifier]) {
             [mutableTime deleteCharactersInRange:sufRange];
+            int newhh = (int)[[separatedSet objectAtIndex:0] integerValue] % 12;
+            
+            [mutableTime replaceCharactersInRange:preRange withString:[NSString stringWithFormat:@"%02d",newhh]];
         } else if ([time hasSuffix:pmIdentifier]) {
             [mutableTime deleteCharactersInRange:sufRange];
-            NSArray <NSString *> * separatedSet = [mutableTime componentsSeparatedByString:@":"];
-            int newhh = (int)[[separatedSet objectAtIndex:0] integerValue] + 12;
+            int newhh = (int)[[separatedSet objectAtIndex:0] integerValue] % 12 + 12;
             [mutableTime replaceCharactersInRange:preRange withString:[NSString stringWithFormat:@"%d",newhh]];
         }
         
