@@ -7,30 +7,38 @@
 //
 
 #import <Foundation/Foundation.h>
-int abs(int number) {
-    return (number>=0)?number:(-number);
+
+int abs(int input) {
+    return (input>=0)?input:-input;
 }
 
-int getDiagonalDifference(int a[][3], int n) {
-    int diagonalDifference = 0;
-    for(int a_i = 0,a_j = 0; a_i < n; ++a_i,++a_j){
-        diagonalDifference += (a[a_i][a_j]-a[a_i][n-a_j-1]);
+int getDiagonalDifference(NSMutableArray *array2d, int n) {
+    int sum = 0;
+    for (int i = 0,j=0;i < n; ++i,++j) {
+        sum += ([[[array2d objectAtIndex:i] objectAtIndex:j] integerValue] - [[[array2d objectAtIndex:i] objectAtIndex:(n-j-1)] integerValue]);
     }
-    return abs(diagonalDifference);
+    return abs(sum);
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        //get the size
         int n;
         scanf("%i",&n);
-        int a[n][n];
+        
+        //generate 2D-Array
+        NSMutableArray *array2d = [[NSMutableArray alloc] initWithCapacity: n];
+        int curInt;
         for(int a_i = 0; a_i < n; a_i++){
+            NSMutableArray *rowArray = [[NSMutableArray alloc] initWithCapacity: n];
             for(int a_j = 0; a_j < n; a_j++){
-                scanf("%d",&a[a_i][a_j]);
+                scanf("%d",&curInt);
+                [rowArray addObject:[NSNumber numberWithInt:curInt]];
             }
+            [array2d addObject:rowArray];
         }
-        int res = getDiagonalDifference(a, n);
-        printf("%d", res);
+        int res = getDiagonalDifference(array2d, n);
+        printf("%d\n", res);
     }
     return 0;
 }
