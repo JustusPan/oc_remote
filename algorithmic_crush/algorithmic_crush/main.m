@@ -13,27 +13,30 @@ int main(int argc, const char * argv[]) {
         int listSize, opNum;
         scanf("%d %d", &listSize, &opNum);
         
-        NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:listSize];
+        NSMutableArray *array = [[NSMutableArray alloc] init];
         for (int i = 0; i<listSize;++i) {
-            [array addObject:[NSNumber numberWithInt:0]];
+            [array addObject:[NSNumber numberWithLongLong:0]];
         
         }
         for (int i = 0; i<opNum; ++i) {
             int startIndex, endIndex, incrValue;
             scanf("%d %d %d", &startIndex, &endIndex, &incrValue);
-            for (int j = 0; j<listSize; ++j){
-                if (j>=startIndex-1 && j<=endIndex-1) {
-                    int newValue = (int)[[array objectAtIndex:j] integerValue] + incrValue;
-                    [array replaceObjectAtIndex:j withObject:[NSNumber numberWithInt:newValue]];
-                }
+            long long int posValue = [[array objectAtIndex:(startIndex-1)] longLongValue] + (long long)incrValue;
+            [array replaceObjectAtIndex:startIndex-1 withObject:[NSNumber numberWithLongLong:posValue]];
+            
+            if (endIndex<listSize) {
+                long long int negValue = [[array objectAtIndex:endIndex] longLongValue] - (long long)incrValue;
+                [array replaceObjectAtIndex:endIndex withObject:[NSNumber numberWithLongLong:negValue]];
             }
         }
         
-        int max = 0;
+        long long int max = 0;
+        long long int curSum = 0;
         for (NSNumber *num in array) {
-            max = (max > num.intValue)?max:num.intValue;
+            curSum += num.longLongValue;
+            max=(max>curSum)?max:curSum;
         }
-        printf("%d\n", max);
+        printf("%lld\n", max);
         
     }
     return 0;
